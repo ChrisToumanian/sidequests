@@ -1,0 +1,8 @@
+character_directory: dnd_beyond/characters
+characters:
+  - name: Wizard
+    id: 000000000 
+dndbeyond: 
+  character_service_url: https://character-service.dndbeyond.com/character/v3/character/
+discord:
+  token:
