@@ -1,3 +1,5 @@
+# Rename this file to config.yaml
+# D&D Beyond settings
 character_directory: dnd_beyond/characters
 characters:
   - name: Wizard
@@ -5,5 +7,8 @@ characters:
     id: 000000000 
 dndbeyond: 
   character_service_url: https://character-service.dndbeyond.com/character/v3/character/
+
+# Discord bot settings
+# Obtain token from https://discord.com/developers/applications
 discord:
   token:

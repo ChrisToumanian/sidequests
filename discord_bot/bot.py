@@ -38,7 +38,7 @@ async def roll(interaction: discord.Interaction, dice:str):
         print(e)
 
 @bot.tree.command(name="characters")
-async def hello(interaction: discord.Interaction):
+async def characters(interaction: discord.Interaction):
     try:
         character_stats = CharacterStats()
         message = character_stats.get_character_stats()
