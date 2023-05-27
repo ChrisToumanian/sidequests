@@ -100,4 +100,5 @@ async def roll(interaction: discord.Interaction):
     except Exception as e:
         print(e)
 
-bot.run(token)
+def run():
+    bot.run(token)
