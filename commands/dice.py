@@ -2,7 +2,7 @@ import random
 
 class Dice:
     @staticmethod
-    def roll(dice_notation, interaction):
+    def roll(dice_notation="d20"):
         sides = int(dice_notation.split('d')[1].split("+")[0])
 
         if dice_notation[0] != 'd':
@@ -28,6 +28,11 @@ class Dice:
         total += bonus
         roll_str += f"+{bonus}"
 
+        return total, sides, n_dice, bonus, roll_str
+
+    @staticmethod
+    def roll_verbose(interaction, dice_notation="d20"):
+        total, sides, n_dice, bonus, roll_str = roll(dice_notation)
         response = f"[🎲{dice_notation}] **{interaction.user.name}** rolls **{total}** ({roll_str})."
 
         if len(response) > 2000:

@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import yaml
-import character_stats
+from commands.character_stats import CharacterStats
 from commands.dice import Dice
 from commands.magic_eight_ball import Magic8Ball
 
@@ -32,15 +32,19 @@ async def on_ready():
 @app_commands.describe(dice="What type of dice? (d20, d6, 2d12, 3d4+2 etc.)")
 async def roll(interaction: discord.Interaction, dice:str):
     try:
-        message = Dice.roll(dice, interaction) 
+        message = Dice.roll_verbose(interaction, dice) 
         await interaction.response.send_message(message)
     except Exception as e:
         print(e)
 
 @bot.tree.command(name="characters")
 async def hello(interaction: discord.Interaction):
-    message = character_stats.get_character_stats()
-    await interaction.response.send_message(message, ephemeral=False)
+    try:
+        character_stats = CharacterStats()
+        message = character_stats.get_character_stats()
+        await interaction.response.send_message(message, ephemeral=False)
+    except Exception as e:
+        print(e)
 
 @bot.tree.command(name="magic8ball")
 async def roll(interaction: discord.Interaction):
