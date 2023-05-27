@@ -32,7 +32,7 @@ class Dice:
 
     @staticmethod
     def roll_verbose(interaction, dice_notation="d20"):
-        total, sides, n_dice, bonus, roll_str = roll(dice_notation)
+        total, sides, n_dice, bonus, roll_str = Dice.roll(dice_notation)
         response = f"[🎲{dice_notation}] **{interaction.user.name}** rolls **{total}** ({roll_str})."
 
         if len(response) > 2000:

@@ -6,7 +6,7 @@ class CharacterStats:
         self.characters = []
 
     def load_config(self):
-        with open('config.yaml', 'r') as file:
+        with open('settings/config.yaml', 'r') as file:
             self.config = yaml.safe_load(file)
 
     def load_json_file(self, file_path):
