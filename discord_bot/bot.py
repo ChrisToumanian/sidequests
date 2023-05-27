@@ -8,7 +8,7 @@ from commands.magic_eight_ball import Magic8Ball
 
 # Import config
 def load_config():
-    with open('config.yaml', 'r') as file:
+    with open('settings/config.yaml', 'r') as file:
         config = yaml.safe_load(file)
     return config
 
