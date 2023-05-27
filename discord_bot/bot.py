@@ -1,7 +1,7 @@
+import yaml
 import discord
 from discord import app_commands
 from discord.ext import commands
-import yaml
 from commands.character_stats import CharacterStats
 from commands.dice import Dice
 from commands.magic_eight_ball import Magic8Ball
