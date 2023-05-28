@@ -7,6 +7,7 @@ from commands.dice import Dice
 from commands.magic_eight_ball import Magic8Ball
 from dnd_beyond.download_characters import DownloadCharacters
 from commands.character import Character, CharacterPool
+from commands.users import Users
 
 # Import config
 def load_config():
@@ -39,6 +40,16 @@ async def update(interaction: discord.Interaction):
         download_characters = DownloadCharacters()
         download_characters.download()
         await interaction.response.send_message("Characters downloaded from D&D Beyond and updated!")
+    except Exception as e:
+        print(e)
+
+@bot.tree.command(name="register")
+@app_commands.describe(dnd_beyond_id="The 9-digit D&D Beyond character ID from the URL.", character_name="The name of your character")
+async def register(interaction: discord.Interaction, dnd_beyond_id:int, character_name:str):
+    global characters
+    try:
+        message = Users.add_user(character_name, interaction.user.name, dnd_beyond_id)
+        await interaction.response.send_message(message, ephemeral=False)
     except Exception as e:
         print(e)
 
