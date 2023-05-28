@@ -102,7 +102,7 @@ async def print_character_stats(interaction: discord.Interaction):
         msg += f"\n{details['gender']} {details['race']}"
 
         for c in classes:
-            msg += f"\nLevel {c['level']} {c['definition']['name']}"
+            msg += f"\nLevel {c['level']} {c['definition']['name']}\n"
         
         msg += f"\nStrength: {abilities['strength']}"
         msg += f"\nDexterity: {abilities['dexterity']}"

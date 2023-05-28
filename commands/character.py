@@ -31,7 +31,7 @@ class Character:
         details = {
             "name": self.data["name"],
             "gender": self.data["gender"],
-            "race": self.data["race"],
+            "race": self.data["race"]["fullName"],
             "faith": self.data["faith"],
             "age": self.data["age"],
             "hair": self.data["hair"],
@@ -58,7 +58,7 @@ class Character:
         return self.data["campaign"]
 
     def get_abilities(self):
-        stats = {
+        abilities = {
             "strength": self.data["stats"][0]["value"],
             "dexterity": self.data["stats"][1]["value"],
             "constitution": self.data["stats"][2]["value"],
