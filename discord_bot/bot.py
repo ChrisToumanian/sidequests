@@ -5,6 +5,7 @@ from discord.ext import commands
 from commands.character_stats import CharacterStats
 from commands.dice import Dice
 from commands.magic_eight_ball import Magic8Ball
+from dnd_beyond.download_characters import DownloadCharacters
 
 # Import config
 def load_config():
@@ -28,6 +29,15 @@ async def on_ready():
         print(e)
 
 # Commands
+@bot.tree.command(name="update")
+async def update(interaction: discord.Interaction):
+    try:
+        download_characters = DownloadCharacters()
+        download_characters.download()
+        await interaction.response.send_message("Characters downloaded from D&D Beyond and updated!")
+    except Exception as e:
+        print(e)
+
 @bot.tree.command(name="roll")
 @app_commands.describe(dice="What type of dice? (d20, d6, 2d12, 3d4+2 etc.)")
 async def roll(interaction: discord.Interaction, dice:str):
