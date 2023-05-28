@@ -9,7 +9,9 @@ from dnd_beyond.download_characters import DownloadCharacters
 from commands.character import Character, CharacterPool
 from commands.users import Users
 
-# Import config
+# ----------------------------------------------------------------------------------
+# Configuration
+# ----------------------------------------------------------------------------------
 def load_config():
     with open('settings/config.yaml', 'r') as file:
         config = yaml.safe_load(file)
@@ -33,7 +35,9 @@ async def on_ready():
     except Exception as e:
         print(e)
 
-# Commands
+# ----------------------------------------------------------------------------------
+# D&D Character Registration and updates
+# ----------------------------------------------------------------------------------
 @bot.tree.command(name="update")
 async def update(interaction: discord.Interaction):
     try:
@@ -68,20 +72,9 @@ async def register(interaction: discord.Interaction):
     except Exception as e:
         print(e)
 
-@bot.tree.command(name="roll")
-@app_commands.describe(dice="What type of dice? (d20, d6, 2d12, 3d4+2 etc.)")
-async def roll(interaction: discord.Interaction, dice:str):
-    global characters
-    try:
-        username = interaction.user.name
-        for character in characters:
-            if character.discord_username == username:
-                username = character.name
-        message = Dice.roll_verbose(username, dice) 
-        await interaction.response.send_message(message)
-    except Exception as e:
-        print(e)
-
+# ----------------------------------------------------------------------------------
+# D&D Character Stats
+# ----------------------------------------------------------------------------------
 @bot.tree.command(name="balance")
 async def balance(interaction: discord.Interaction):
     global characters
@@ -105,6 +98,23 @@ async def print_character_stats(interaction: discord.Interaction):
     except Exception as e:
         print(e)
 
+# ----------------------------------------------------------------------------------
+# Tools
+# ----------------------------------------------------------------------------------
+@bot.tree.command(name="roll")
+@app_commands.describe(dice="What type of dice? (d20, d6, 2d12, 3d4+2 etc.)")
+async def roll(interaction: discord.Interaction, dice:str):
+    global characters
+    try:
+        username = interaction.user.name
+        for character in characters:
+            if character.discord_username == username:
+                username = character.name
+        message = Dice.roll_verbose(username, dice) 
+        await interaction.response.send_message(message)
+    except Exception as e:
+        print(e)
+
 @bot.tree.command(name="magic8ball")
 async def roll(interaction: discord.Interaction):
     try:
@@ -113,6 +123,8 @@ async def roll(interaction: discord.Interaction):
     except Exception as e:
         print(e)
 
+# ----------------------------------------------------------------------------------
 # Initialization
+# ----------------------------------------------------------------------------------
 def run():
     bot.run(token)
