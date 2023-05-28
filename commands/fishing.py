@@ -29,6 +29,21 @@ class Fishing:
         dice = "d20"
         roll, total = Dice.roll_verbose(character.name, dice)
 
-        response += f"\n{character.name} catches a {loot}!"
+        item = Fishing.loot()
+        response += f"\n{character.name} catches a {item['name']}, worth {item['value']} GP. {item['description']}!"
  
         return f"```{response}```"
+
+    @staticmethod
+    def loot():
+        # Load the JSON file
+        with open('data/loot/fish.json') as json_file:
+            loot_table = json.load(json_file)
+
+        # Roll for loot
+        loot_roll = random.uniform(0, 100)
+
+        for item in loot_table['loot_table']:
+            if loot_roll <= item['loot_percentage']:
+                return item
+        return None
