@@ -2,7 +2,6 @@ import yaml
 import discord
 from discord import app_commands
 from discord.ext import commands
-from commands.character_stats import CharacterStats
 from commands.dice import Dice
 from commands.magic_eight_ball import Magic8Ball
 from dnd_beyond.download_characters import DownloadCharacters
@@ -144,7 +143,7 @@ async def roll(interaction: discord.Interaction, dice:str):
         for character in characters:
             if character.discord_username == username:
                 username = character.name
-        message = Dice.roll_verbose(username, dice) 
+        message, total = Dice.roll_verbose(username, dice) 
         await interaction.response.send_message(message)
     except Exception as e:
         print(e)
