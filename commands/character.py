@@ -57,7 +57,7 @@ class Character:
     def get_campaign(self):
         return self.data["campaign"]
 
-    def get_stats(self):
+    def get_abilities(self):
         stats = {
             "strength": self.data["stats"][0]["value"],
             "dexterity": self.data["stats"][1]["value"],

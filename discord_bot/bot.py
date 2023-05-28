@@ -89,12 +89,29 @@ async def balance(interaction: discord.Interaction):
     except Exception as e:
         print(e)
 
-@bot.tree.command(name="characters")
+@bot.tree.command(name="stats")
 async def print_character_stats(interaction: discord.Interaction):
+    global characters
     try:
-        character_stats = CharacterStats()
-        message = character_stats.get_character_stats()
-        await interaction.response.send_message(message, ephemeral=False)
+        character = CharacterPool.get_character(characters, interaction.user.name)
+        details = character.get_details()
+        classes = character.get_classes()
+        abilities = character.get_abilities()
+
+        msg = details["name"]
+        msg += f"\n{details['gender']} {details['race']}"
+
+        for c in classes:
+            msg += f"\nLevel {c['level']} {c['definition']['name']}"
+        
+        msg += f"\nStrength: {abilities['strength']}"
+        msg += f"\nDexterity: {abilities['dexterity']}"
+        msg += f"\nConstitution: {abilities['constitution']}"
+        msg += f"\nIntelligence: {abilities['intelligence']}"
+        msg += f"\nWisdom: {abilities['wisdom']}"
+        msg += f"\nCharisma: {abilities['charisma']}"
+
+        await interaction.response.send_message(f"```{msg}```", ephemeral=False)
     except Exception as e:
         print(e)
 
