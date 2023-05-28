@@ -31,9 +31,9 @@ class Dice:
         return total, sides, n_dice, bonus, roll_str
 
     @staticmethod
-    def roll_verbose(interaction, dice_notation="d20"):
+    def roll_verbose(username, dice_notation="d20"):
         total, sides, n_dice, bonus, roll_str = Dice.roll(dice_notation)
-        response = f"[🎲{dice_notation}] **{interaction.user.name}** rolls **{total}** ({roll_str})."
+        response = f"[🎲{dice_notation}] **{username}** rolls **{total}** ({roll_str})."
 
         if len(response) > 2000:
             response = f"[Error] **{dice_notation}** is invalid dice notation"
