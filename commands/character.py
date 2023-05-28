@@ -27,6 +27,50 @@ class Character:
         }
         return currencies
 
+    def get_details(self):
+        details = {
+            "name": self.data["name"],
+            "gender": self.data["gender"],
+            "race": self.data["race"],
+            "faith": self.data["faith"],
+            "age": self.data["age"],
+            "hair": self.data["hair"],
+            "eyes": self.data["eyes"],
+            "skin": self.data["skin"],
+            "height": self.data["height"],
+            "weight": self.data["weight"]
+        }
+        return details
+    
+    def get_notes(self):
+        return self.data["notes"]
+
+    def get_traits(self):
+        return self.data["traits"]
+    
+    def get_inventory(self):
+        return self.data["inventory"]
+
+    def get_classes(self):
+        return self.data["classes"]
+
+    def get_campaign(self):
+        return self.data["campaign"]
+
+    def get_stats(self):
+        stats = {
+            "strength": self.data["stats"][0]["value"],
+            "dexterity": self.data["stats"][1]["value"],
+            "constitution": self.data["stats"][2]["value"],
+            "intelligence": self.data["stats"][3]["value"],
+            "wisdom": self.data["stats"][4]["value"],
+            "charisma": self.data["stats"][5]["value"],
+            "proficiency_bonus": 0,
+            "walking_speed": 0,
+            "initiative": 0
+        }
+        return abilities
+
 class CharacterPool: 
     @staticmethod
     def load_characters():
