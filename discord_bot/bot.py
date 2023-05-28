@@ -8,6 +8,7 @@ from commands.magic_eight_ball import Magic8Ball
 from dnd_beyond.download_characters import DownloadCharacters
 from commands.character import Character, CharacterPool
 from commands.users import Users
+from commands.fishing import Fishing
 
 # ----------------------------------------------------------------------------------
 # Configuration
@@ -99,7 +100,10 @@ async def print_character_stats(interaction: discord.Interaction):
         abilities = character.get_abilities()
 
         msg = details["name"]
-        msg += f"\n{details['gender']} {details['race']}"
+        if details["gender"] != None:
+            msg += f"\n{details['gender']} {details['race']}"
+        else:
+            msg += f"\n{details['race']}"
 
         for c in classes:
             msg += f"\nLevel {c['level']} {c['definition']['name']}\n"
@@ -112,6 +116,19 @@ async def print_character_stats(interaction: discord.Interaction):
         msg += f"\nCharisma: {abilities['charisma']}"
 
         await interaction.response.send_message(f"```{msg}```", ephemeral=False)
+    except Exception as e:
+        print(e)
+
+# ----------------------------------------------------------------------------------
+# Minigames
+# ----------------------------------------------------------------------------------
+@bot.tree.command(name="fish")
+async def roll(interaction: discord.Interaction):
+    global characters
+    try:
+        character = CharacterPool.get_character(characters, interaction.user.name)
+        message = Fishing.fish(character)
+        await interaction.response.send_message(message)
     except Exception as e:
         print(e)
 
