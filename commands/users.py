@@ -11,8 +11,8 @@ class Users:
         # Check if user already exists
         for user in data["characters"]:
             if user["id"] == id:
-                print(f"User with id {id} already exists")
-                return
+                response = f"User with id {id} already exists"
+                return response
 
         # Create new user
         new_user = {
@@ -28,7 +28,8 @@ class Users:
         with open('settings/config.yaml', 'w') as f:
             yaml.safe_dump(data, f)
 
-        print(f"User {name} has been added successfully")
+        response = f"User {name} has been added successfully"
+        return response
 
     @staticmethod
     def remove_user(id):
@@ -40,11 +41,14 @@ class Users:
         for i, user in enumerate(data["characters"]):
             if user["id"] == id:
                 data["characters"].pop(i)
-                print(f"User with id {id} has been removed successfully")
                 break
         else:
-            print(f"User with id {id} not found")
+            response = f"User with id {id} not found"
+            return response
 
         # Write updated data back to the file
         with open('settings/config.yaml', 'w') as f:
             yaml.safe_dump(data, f)
+        
+        response = f"User with id {id} has been removed successfully"
+        return response
