@@ -32,14 +32,14 @@ class Users:
         return response
 
     @staticmethod
-    def remove_user(name):
+    def remove_user(id):
         # Load the configuration file
         with open('settings/config.yaml', 'r') as f:
             data = yaml.safe_load(f)
 
         # Find and remove the user with the given name
         for i, user in enumerate(data["characters"]):
-            if user["name"] == character_name:
+            if user["id"] == id:
                 data["characters"].pop(i)
                 break
         else:
