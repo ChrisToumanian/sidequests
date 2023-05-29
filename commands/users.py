@@ -2,7 +2,7 @@ import yaml
 
 class Users:
     @staticmethod
-    def add_user(name, discord_username, id):
+    def add_user(discord_username, dnd_beyond_id):
         # Load the configuration file
         with open('settings/config.yaml', 'r') as f:
             data = yaml.safe_load(f)
@@ -31,7 +31,7 @@ class Users:
         return response
 
     @staticmethod
-    def remove_user(id):
+    def remove_user(discord_username):
         # Load the configuration file
         with open('settings/config.yaml', 'r') as f:
             data = yaml.safe_load(f)

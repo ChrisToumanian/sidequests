@@ -53,22 +53,22 @@ async def update(interaction: discord.Interaction):
 
 @bot.tree.command(name="register")
 @app_commands.describe(dnd_beyond_id="The 9-digit D&D Beyond character ID from the URL.", character_name="The name of your character")
-async def register(interaction: discord.Interaction, dnd_beyond_id:int, character_name:str):
+async def register(interaction: discord.Interaction, dnd_beyond_id:int):
     global characters
     try:
-        message = Users.add_user(character_name, interaction.user.name, dnd_beyond_id)
+        message = Users.add_user(interaction.user.name, dnd_beyond_id)
         characters = CharacterPool.load_characters()
         await interaction.response.send_message(message, ephemeral=False)
     except Exception as e:
         print(e)
 
 @bot.tree.command(name="unregister")
-async def register(interaction: discord.Interaction):
+async def unregister(interaction: discord.Interaction):
     global characters
     try:
         character = CharacterPool.get_character(characters, interaction.user.name)
         if character != None:
-            message = Users.remove_user(character.id)
+            message = Users.remove_user(interaction.user.name)
             characters = CharacterPool.load_characters()
         else:
             message = "Character not found! You have not registered."

@@ -8,11 +8,13 @@ CREATE TABLE IF NOT EXISTS players (
     email VARCHAR(255),
     first_name VARCHAR(255),
     last_name VARCHAR(255),
-    activated BOOLEAN DEFAULT TRUE
+    activated BOOLEAN DEFAULT TRUE,
+    current_character_id INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS characters (
     id SERIAL PRIMARY KEY,
+    dnd_beyond_id INTEGER,
     player_uuid UUID REFERENCES players(uuid),
     name VARCHAR(255),
     age INTEGER,
