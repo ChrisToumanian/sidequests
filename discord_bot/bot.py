@@ -8,6 +8,7 @@ from dnd_beyond.download_characters import DownloadCharacters
 from commands.character import Character, CharacterPool
 from commands.users import Users
 from commands.fishing import Fishing
+from database.connection import DatabaseConnection
 
 # ----------------------------------------------------------------------------------
 # Configuration
@@ -19,6 +20,9 @@ def load_config():
 
 # Load characters
 characters = CharacterPool.load_characters()
+
+# Create database connection
+db = DatabaseConnection()
 
 # Create bot
 config = load_config()

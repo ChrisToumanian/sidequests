@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS players (
     op BOOLEAN DEFAULT FALSE,
     email VARCHAR(255),
     first_name VARCHAR(255),
-    last_name VARCHAR(255)
+    last_name VARCHAR(255),
+    activated BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS characters (
