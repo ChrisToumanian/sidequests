@@ -1,4 +1,5 @@
 import random
+import json
 from commands.dice import Dice
 
 class Fishing:
@@ -10,8 +11,8 @@ class Fishing:
         roll, total = Dice.roll_verbose(character.name, dice)
         response += f"\n{roll}"
 
-        if total < 10:
-            response += f"\n{character.name} waits but but nothing bites."
+        if total < 6:
+            response += f"\n{character.name} waits but nothing bites."
             return f"```{response}```"
 
         # Reel
@@ -20,17 +21,16 @@ class Fishing:
         roll, total = Dice.roll_verbose(character.name, dice)
         response += f"\n{roll}"
 
-        if total < 6:
+        if total < 8:
             response += f"\nThe fish gets away."
             return f"```{response}```"
  
         # Catch
-        loot = "Carp"
         dice = "d20"
         roll, total = Dice.roll_verbose(character.name, dice)
 
         item = Fishing.loot()
-        response += f"\n{character.name} catches a {item['name']}, worth {item['value']} GP. {item['description']}!"
+        response += f"\n{character.name} catches a {item['name']}! {item['description']}"
  
         return f"```{response}```"
 
@@ -38,12 +38,8 @@ class Fishing:
     def loot():
         # Load the JSON file
         with open('data/loot/fish.json') as json_file:
-            loot_table = json.load(json_file)
+            loot_table = json.load(json_file)['loot_table']
+        
+        roll = random.randint(0, len(loot_table) - 1)
 
-        # Roll for loot
-        loot_roll = random.uniform(0, 100)
-
-        for item in loot_table['loot_table']:
-            if loot_roll <= item['loot_percentage']:
-                return item
-        return None
+        return loot_table[roll]
