@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS players (
     username VARCHAR(255),
-    uuid UUID DEFAULT uuid_generate_v4(),
+    uuid UUID DEFAULT uuid_generate_v4() UNIQUE,
     joined_date TIMESTAMP WITH TIME ZONE,
     op BOOLEAN,
     email VARCHAR(255),
