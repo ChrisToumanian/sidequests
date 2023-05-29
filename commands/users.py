@@ -1,7 +1,6 @@
 import yaml
 
 class Users:
-    
     @staticmethod
     def add_user(name, discord_username, id):
         # Load the configuration file

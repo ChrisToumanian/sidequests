@@ -11,10 +11,12 @@ sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
 echo "Creating user..."
 sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASS';"
 
-echo "Granting privileges to user on database..."
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
-
 echo "Creating tables on database..."
 sudo -u postgres psql -d $DB_NAME -f setup.sql
+
+# log in as user with: psql -U dm -d sidequests -h localhost
+echo "Granting privileges to user on database..."
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
+sudo -u postgres psql -d $DB_NAME -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO $DB_USER;"
 
 echo "Done."
