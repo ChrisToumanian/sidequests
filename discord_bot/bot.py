@@ -22,7 +22,7 @@ def load_config():
 characters = CharacterPool.load_characters()
 
 # Create database connection
-db = DatabaseConnection()
+db_conn = DatabaseConnection()
 
 # Create bot
 config = load_config()
@@ -44,6 +44,7 @@ async def on_ready():
 # ----------------------------------------------------------------------------------
 @bot.tree.command(name="update")
 async def update(interaction: discord.Interaction):
+    global db_conn
     try:
         download_characters = DownloadCharacters()
         download_characters.download()
@@ -52,11 +53,11 @@ async def update(interaction: discord.Interaction):
         print(e)
 
 @bot.tree.command(name="register")
-@app_commands.describe(dnd_beyond_id="The 9-digit D&D Beyond character ID from the URL.", character_name="The name of your character")
+@app_commands.describe(dnd_beyond_id="The 9-digit D&D Beyond character ID from the URL.")
 async def register(interaction: discord.Interaction, dnd_beyond_id:int):
-    global characters
+    global db_conn, characters
     try:
-        message = Users.add_user(interaction.user.name, dnd_beyond_id)
+        message = Users.add_user(interaction.user.name, dnd_beyond_id, db_conn)
         characters = CharacterPool.load_characters()
         await interaction.response.send_message(message, ephemeral=False)
     except Exception as e:
@@ -64,7 +65,7 @@ async def register(interaction: discord.Interaction, dnd_beyond_id:int):
 
 @bot.tree.command(name="unregister")
 async def unregister(interaction: discord.Interaction):
-    global characters
+    global db_conn, characters
     try:
         character = CharacterPool.get_character(characters, interaction.user.name)
         if character != None:
