@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS characters (
     initiative INTEGER,
     walking_speed INTEGER,
     base_hit_points INTEGER,
-    urrent_xp INTEGER DEFAULT 0,
+    current_xp INTEGER DEFAULT 0,
     lifestyle_id INTEGER,
     strength INTEGER,
     dexterity INTEGER,
