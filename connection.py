@@ -20,3 +20,13 @@ class DatabaseConnection:
         rows = cursor.fetchall()
         cursor.close()
         return rows
+
+    def execute(self, query_string):
+        cursor = self.connection.cursor()
+        cursor.execute(query_string)
+        self.connection.commit()
+        if cursor.rowcount >= 1:
+            return True
+        else:
+            return False
+        cursor.close()
