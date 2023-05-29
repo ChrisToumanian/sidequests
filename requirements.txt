@@ -3,3 +3,4 @@ yaml
 random
 json
 requests
+psycopg2
