@@ -19,8 +19,8 @@ class Users:
                 INSERT INTO users (username) VALUES (%s);
             """, (discord_username,))
 
-        # Create character
-        Users.update_character(discord_username, dnd_beyond_id, db_conn)
+        # Create or update character
+        Users.add_character(discord_username, dnd_beyond_id, db_conn)
 
         message = f"Player {discord_username} has been added successfully. Thank you for registering!"
         return message
@@ -45,19 +45,21 @@ class Users:
         return message
 
     @staticmethod
-    def update_character(discord_username, dnd_beyond_id, db_conn):
+    def add_character(discord_username, dnd_beyond_id, db_conn):
         res = db_conn.execute("""
+            DELETE FROM characters
+            WHERE dnd_beyond_id = %s
+            AND created_by_user_uuid = (
+                SELECT user_uuid
+                FROM users
+                WHERE username = %s
+            );
+
             WITH new_character AS (
                 INSERT INTO characters (created_by_user_uuid, dnd_beyond_id)
                 SELECT user_uuid, %s
                 FROM users
                 WHERE username = %s
-                AND NOT EXISTS (
-                    SELECT 1
-                    FROM characters
-                    WHERE created_by_user_uuid = users.user_uuid
-                    AND dnd_beyond_id = %s
-                )
                 RETURNING character_uuid
             )
             UPDATE users
@@ -66,6 +68,6 @@ class Users:
                 FROM new_character
             )
             WHERE username = %s;
-        """, (dnd_beyond_id, discord_username, dnd_beyond_id, discord_username))
+        """, (dnd_beyond_id, discord_username, dnd_beyond_id, discord_username, discord_username))
 
         return bool(res)
