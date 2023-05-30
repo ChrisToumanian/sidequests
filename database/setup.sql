@@ -1,8 +1,9 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS players (
-    username VARCHAR(255),
+DROP TABLE IF EXISTS players;
+CREATE TABLE players (
     uuid UUID DEFAULT uuid_generate_v4() UNIQUE,
+    username VARCHAR(255),
     joined_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     op BOOLEAN DEFAULT FALSE,
     email VARCHAR(255),
@@ -12,10 +13,12 @@ CREATE TABLE IF NOT EXISTS players (
     current_character_id INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS characters (
+DROP TABLE IF EXISTS characters;
+CREATE TABLE characters (
     id SERIAL PRIMARY KEY,
+    player_uuid UUID NOT NULL,
+    create_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     dnd_beyond_id INTEGER,
-    player_uuid UUID REFERENCES players(uuid),
     name VARCHAR(255),
     age INTEGER,
     race VARCHAR(100),
