@@ -8,9 +8,9 @@ class Users:
         """, (discord_username,))
 
         if result:
-            response = f"Player {discord_username} has been added successfully"
+            response = f"Player {discord_username} has been added successfully. Thank you for registering!"
         else:
-            response = f"Error adding {discord_username}"
+            response = f"Error adding {discord_username}."
 
         return response
 
@@ -21,8 +21,8 @@ class Users:
         """, (discord_username,))
         
         if result:
-            response = f"User {discord_username} has been removed successfully"
+            response = f"{discord_username} has been removed successfully. Thank you for playing!"
         else:
-            response = f"Error removing {discord_username}. Were you signed up?"
+            response = f"No player {discord_username} found. Were you signed up?"
 
         return response
