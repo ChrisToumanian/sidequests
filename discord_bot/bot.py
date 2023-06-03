@@ -44,7 +44,6 @@ async def register(interaction: discord.Interaction, dnd_beyond_id:int):
     global db_conn, characters
     try:
         message = Users.add_user(interaction.user.name, dnd_beyond_id, db_conn)
-        characters = CharacterPool.load_characters()
         await interaction.response.send_message(message, ephemeral=False)
     except Exception as e:
         print(e)
