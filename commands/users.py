@@ -90,4 +90,7 @@ class Users:
             WHERE username = %s;
         """, (dnd_beyond_id, username, dnd_beyond_id, username, username))
 
-        DNDBeyondImporter.import_character(Users.get_user_uuid(username, db_conn), dnd_beyond_id, db_conn)
+        character_imported = DNDBeyondImporter.import_character(Users.get_user_uuid(username, db_conn), dnd_beyond_id, db_conn)
+        print(character_imported)
+
+        return character_imported
