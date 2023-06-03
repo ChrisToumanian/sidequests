@@ -25,4 +25,4 @@ class DNDBeyondImporter:
 
     @staticmethod
     def load_character(user_uuid, dnd_beyond_id, db_conn, data):
-        print(data["name"])
+        print(data["currencies"]["gp"])

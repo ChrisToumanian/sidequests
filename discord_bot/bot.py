@@ -4,7 +4,6 @@ from discord import app_commands
 from discord.ext import commands
 from commands.dice import Dice
 from commands.magic_eight_ball import Magic8Ball
-from dnd_beyond.download_characters import DownloadCharacters
 from commands.character import Character, CharacterPool
 from commands.users import Users
 from commands.fishing import Fishing
@@ -17,9 +16,6 @@ def load_config():
     with open('settings/config.yaml', 'r') as file:
         config = yaml.safe_load(file)
     return config
-
-# Load characters
-characters = CharacterPool.load_characters()
 
 # Create database connection
 db_conn = DatabaseConnection()

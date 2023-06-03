@@ -91,6 +91,5 @@ class Users:
         """, (dnd_beyond_id, username, dnd_beyond_id, username, username))
 
         character_imported = DNDBeyondImporter.import_character(Users.get_user_uuid(username, db_conn), dnd_beyond_id, db_conn)
-        print(character_imported)
 
         return character_imported
