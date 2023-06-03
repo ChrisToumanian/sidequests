@@ -1,5 +1,6 @@
 import yaml
 import requests
+import json
 
 class DNDBeyondImporter:
     @staticmethod
@@ -15,9 +16,10 @@ class DNDBeyondImporter:
 
         response = requests.get(url)
         if response.status_code == 200:
-            DNDBeyondImporter.load_character(dnd_beyond_id, db_conn, response.content)
+            DNDBeyondImporter.load_character(user_uuid, dnd_beyond_id, db_conn, json.loads(response.content))
         else:
             print(f"Failed to download JSON file. Status Code: {response.status_code}")
 
+    @staticmethod
     def load_character(user_uuid, dnd_beyond_id, db_conn, data):
-        print(data["name")
+        print(data["name"])
