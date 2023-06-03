@@ -1,3 +1,5 @@
+from dnd_beyond.dnd_beyond_importer import DNDBeyondImporter
+
 class Users:
     @staticmethod
     def add_user(username, dnd_beyond_id, db_conn):
@@ -53,6 +55,16 @@ class Users:
         return res["character_uuid"]
 
     @staticmethod
+    def get_user_uuid(username, db_conn):
+        res = db_conn.execute("""
+            SELECT uuid
+            FROM users
+            WHERE username = %s;
+        """, (username))
+
+        return res["character_uuid"]
+
+    @staticmethod
     def add_character(username, dnd_beyond_id, db_conn):
         res = db_conn.execute("""
             DELETE FROM characters
@@ -77,5 +89,7 @@ class Users:
             )
             WHERE username = %s;
         """, (dnd_beyond_id, username, dnd_beyond_id, username, username))
+
+        DNDBeyondImporter.import_character(Users.get_user_uuid(username), dnd_beyond_id, db_conn)
 
         return bool(res)
