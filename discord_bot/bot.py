@@ -42,16 +42,6 @@ async def on_ready():
 # ----------------------------------------------------------------------------------
 # D&D Character Registration and updates
 # ----------------------------------------------------------------------------------
-@bot.tree.command(name="update")
-async def update(interaction: discord.Interaction):
-    global db_conn
-    try:
-        download_characters = DownloadCharacters()
-        download_characters.download()
-        await interaction.response.send_message("Characters downloaded from D&D Beyond and updated!")
-    except Exception as e:
-        print(e)
-
 @bot.tree.command(name="register")
 @app_commands.describe(dnd_beyond_id="The 9-digit D&D Beyond character ID from the URL.")
 async def register(interaction: discord.Interaction, dnd_beyond_id:int):
