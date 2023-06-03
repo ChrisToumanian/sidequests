@@ -25,4 +25,10 @@ class DNDBeyondImporter:
 
     @staticmethod
     def load_character(user_uuid, dnd_beyond_id, db_conn, data):
-        print(data["currencies"]["gp"])
+        # Set currency
+        res = db_conn.execute("""
+            UPDATE characters
+            SET gold_amount = %s
+            WHERE created_by_user_uuid = %s
+                AND dnd_beyond_id = %s;
+        """, (data["currencies"]["gp"], user_uuid, dnd_beyond_id))

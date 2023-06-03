@@ -20,9 +20,9 @@ class Users:
             """, (username,))
 
         # Create or update character
-        Users.add_character(username, dnd_beyond_id, db_conn)
+        character_name = Users.add_character(username, dnd_beyond_id, db_conn)
 
-        message = f"Player {username} has been added successfully. Thank you for registering!"
+        message = f"Player {username} registered character {character_name}"
         return message
 
     @staticmethod
@@ -45,14 +45,20 @@ class Users:
         return message
 
     @staticmethod
-    def get_current_character_uuid(username, db_conn):
+    def get_current_character(username, db_conn):
         res = db_conn.query("""
             SELECT current_character_uuid
             FROM users
             WHERE username = %s;
         """, (username,))
 
-        return res[0]["character_uuid"]
+        res2 = db_conn.query("""
+            SELECT name
+            FROM characters
+            WHERE character_uuid = %s;
+        """, (res[0]["current_character_uuid"],))
+
+        return res[0]["current_character_uuid"], res2[0]["name"]
 
     @staticmethod
     def get_user_uuid(username, db_conn):
@@ -90,6 +96,8 @@ class Users:
             WHERE username = %s;
         """, (dnd_beyond_id, username, dnd_beyond_id, username, username))
 
-        character_imported = DNDBeyondImporter.import_character(Users.get_user_uuid(username, db_conn), dnd_beyond_id, db_conn)
+        DNDBeyondImporter.import_character(Users.get_user_uuid(username, db_conn), dnd_beyond_id, db_conn)
 
-        return character_imported
+        character_uuid, character_name = Users.get_current_character(username, db_conn)
+
+        return character_name
